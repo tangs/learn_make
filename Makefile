@@ -1,13 +1,26 @@
-objs = main.o test.o
+CC = gcc
 
-main: ${objs}
-	cc -o main ${objs}
-	
-test.o: src/test.h src/test.c
-	cc -c src/test.c
+objs = a.o test.o main.o
+# mainObj = main.o
 
-main.o: test.o src/main.c
-	cc -c src/main.c
+vpath %h = header
+vpath %c = src
 
+main: $(objs) main.o
+	$(CC) -o main $(objs)
+
+# $(mainObj): %.o: %.c
+# 	$(CC) -c $(CFLAGS) $< -o $@
+
+%.d: %.c %.h
+	@set -e; rm -f $@; \
+	$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+$(objs): %.o: %.c %.d
+	$(CC) -c $(CFLAGS) $< -o $@
+
+.PHONY: clean
 clean:
-	rm -rf ${objs} main
+	-rm *.o *.d main

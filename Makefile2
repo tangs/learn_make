@@ -1,0 +1,16 @@
+# VPATH = src:header
+vpath %.h = header
+vpath %.c = src
+
+objs = main.o test.o
+
+main: ${objs}
+	cc -o main ${objs}
+	
+test.o: test.h
+
+main.o:
+
+.PHONY: clean
+clean:
+	-rm -rf ${objs} main
