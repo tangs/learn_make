@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "lib.h": "c",
-        "static_lib.h": "c"
+        "static_lib.h": "c",
+        "dynamic_lib.h": "c"
     }
 }
