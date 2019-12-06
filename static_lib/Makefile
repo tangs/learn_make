@@ -8,10 +8,10 @@ vpath %h = include
 vpath %o = $(OBJ_DIR)
 vpath %d = $(D_DIR)
 
-obj = lib.o
+obj = static_lib.o
 
 dest: prev $(obj)
-	ar -crv lib.a $(OBJ_DIR)/$(obj)
+	ar -crv libxx.a $(OBJ_DIR)/$(obj)
 
 %.d: %.c %.h
 	@set -e; rm -f $@; \
